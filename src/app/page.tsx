@@ -26,7 +26,7 @@ export default function Home() {
         <>
             <div>
                 <Image
-                layout="fill"
+                fill
                 className="object-center object-covert pointer-events-none -z-10"
                 src="/sierra.jpg"
                 alt=""
