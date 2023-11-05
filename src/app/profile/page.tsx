@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 function Item({text, icon, link, id}: {text: string, icon: string, link: string, id: string}) {
     return (
         <a href={link} target="_blank" key={id}>
-            <div className="h-24 md:h-28 border-0 hover:border-0 rounded-3xl p-4 flex items-center justify-center cursor-pointer hover:bg-white/50 bg-white/30 transition-colors">
+            <div className="h-24 md:h-28 border-0 hover:border-0 rounded-3xl p-4 flex items-center justify-center cursor-pointer hover:bg-white/50 bg-white/20 transition-colors">
                 <Image src={icon} width={32} height={32} alt={`${text} logo`} className="w-10 md:w-14"/>
-                <h1 className="text-2xl md:text-4xl pl-2 md:pl-4 font-medium">{text}</h1>
+                <h1 className="text-2xl md:text-4xl pl-2 md:pl-4 font-medium text-white">{text}</h1>
             </div>
         </a>
     )
@@ -39,7 +39,7 @@ export default function Profile() {
                         <div className="flex flex-col gap-4">
 
                         <a href="https://discord.com/users/263602820496883712">
-                            <div className="h-24 md:h-28 rounded-3xl flex items-center justify-center cursor-pointer bg-white/30 hover:bg-white/50 transition-colors">
+                            <div className="h-24 md:h-28 rounded-3xl flex items-center justify-center cursor-pointer bg-white/20 hover:bg-white/50 transition-colors">
                                 <Image src="https://discord.c99.nl/widget/theme-4/263602820496883712.png" width={1000} height={1000} alt="logo"/>
                             </div>
 
