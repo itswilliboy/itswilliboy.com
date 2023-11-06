@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
 
 function Item({text, icon, link, id}: {text: string, icon: string, link: string, id: string}) {
     return (
@@ -20,8 +19,6 @@ const socials = [
 ]
 
 export default function Profile() {
-    let [hover, setHover] = useState<boolean>(false)
-
     return (
         <>
             <div>
@@ -35,9 +32,7 @@ export default function Profile() {
                     <div className="w-[350px] md:w-[500px] h-[550px] md:h-[650px] bg-white/20 rounded-2xl justify-center p-3 md:p-6 backdrop-blur">
                         <div className="flex flex-row h-32 items-center">
                             <Image src="/milo.jpg" width={128} height={128} alt="pfp" className="rounded-full border-4 pointer-events-none w-24 md:w-32"/>
-                            <h1 className="text-3xl md:text-6xl ml-5 font-medium hover:pr-48" onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setTimeout(()=>setHover(false), 750) }}>
-                                {hover ? "Willi" : "ItsWilliboy"}
-                            </h1>
+                            <h1 className="text-3xl md:text-6xl ml-5 font-medium">ItsWilliboy</h1>
                         </div>
                         <div className="flex justify-center mt-2 mb-6 md:my-8"><hr className="w-4/5 border-2 rounded-lg"/></div>
                         <div className="flex flex-col gap-4">
