@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react";
+import { useState } from "react"
 
 function Item({text, icon, link, id}: {text: string, icon: string, link: string, id: string}) {
     return (
