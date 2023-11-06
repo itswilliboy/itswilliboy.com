@@ -20,7 +20,7 @@ const socials = [
 ]
 
 export default function Profile() {
-    let [hover, setHover] = useState<boolean>()
+    let [hover, setHover] = useState<boolean>(false)
 
     return (
         <>
