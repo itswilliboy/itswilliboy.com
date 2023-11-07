@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, useState } from "react";
-import getVideo from "../../../utils/getVideo";
+import getVideo from "../utils/getVideo";
 
 export default function TikTokForm({urlSetter, loadingSetter}: {urlSetter: (value: any) => void, loadingSetter: (value: any) => void}) {
     let [localUrl, localUrlSetter] = useState<string | null>(null)
