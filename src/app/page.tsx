@@ -18,7 +18,7 @@ export default function Home() {
 
     useEffect(() => {
         updateClock().then(() => {
-            setInterval(updateClock, 1000)
+            setInterval(updateClock, 950)
         })
     }, [])
 
