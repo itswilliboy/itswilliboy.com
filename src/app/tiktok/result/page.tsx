@@ -14,21 +14,19 @@ export default function Result (): JSX.Element {
   }
 
   return (
-    <>
-      <div className="bg-slate-900 w-screen h-screen">
-        <a href="/tiktok">
-          <p className="absolute top-4 left-4 bg-slate-800 p-3 rounded-3xl hover:bg-slate-700 hover:shadow-xl transition-all">
-            &lt;- Go Back
-          </p>
-        </a>
+    <div className="bg-slate-900 w-screen h-screen">
+      <a href="/tiktok">
+        <p className="absolute top-4 left-4 bg-slate-800 p-3 rounded-3xl hover:bg-slate-700 hover:shadow-xl transition-all">
+          &lt;- Go Back
+        </p>
+      </a>
 
-        <div className="flex items-center justify-center h-screen">
-          <video className="rounded-sm h-screen" controls autoPlay>
-            <source src={url} type="video/mp4" />
-            Your browser does not support videos.
-          </video>
-        </div>
+      <div className="flex items-center justify-center h-screen">
+        <video className="rounded-sm h-screen" controls autoPlay>
+          <source src={url} type="video/mp4" />
+          Your browser does not support videos.
+        </video>
       </div>
-    </>
+    </div>
   )
 }

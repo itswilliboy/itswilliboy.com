@@ -40,28 +40,26 @@ export default function TikTokForm ({
   }
 
   return (
-    <>
-      <form onSubmit={onSubmit} className="flex flex-col gap-4 items-center">
-        <input
-          onClick={(e) => {
-            e.currentTarget.select()
-          }}
-          onChange={() => {
-            errorSetter(null)
-          }}
-          type="text"
-          name="url"
-          placeholder="Enter a TikTok Video URL"
-          className="p-2 rounded-lg outline-none bg-transparent w-[325px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors"
-          autoComplete="off"
-        />
+    <form onSubmit={onSubmit} className="flex flex-col gap-4 items-center">
+      <input
+        onClick={(e) => {
+          e.currentTarget.select()
+        }}
+        onChange={() => {
+          errorSetter(null)
+        }}
+        type="text"
+        name="url"
+        placeholder="Enter a TikTok Video URL"
+        className="p-2 rounded-lg outline-none bg-transparent w-[325px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors"
+        autoComplete="off"
+      />
 
-        <input
-          type="submit"
-          value="Download"
-          className="text-white p-2 cursor-pointer border-2 w-48 hover:border-y- rounded-lg hover:bg-violet-400/40 transition-colors"
-        />
-      </form>
-    </>
+      <input
+        type="submit"
+        value="Download"
+        className="text-white p-2 cursor-pointer border-2 w-48 hover:border-y- rounded-lg hover:bg-violet-400/40 transition-colors"
+      />
+    </form>
   )
 }

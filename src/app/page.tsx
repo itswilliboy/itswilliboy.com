@@ -25,24 +25,22 @@ export default function Home (): JSX.Element {
 
   return (
     <>
-      <div>
-        <Image
-          fill
-          className="object-center object-covert pointer-events-none -z-10"
-          src="/sierra.jpg"
-          alt="sierra"
-        />
+      <Image
+        fill
+        className="object-center object-covert pointer-events-none -z-10"
+        src="/sierra.jpg"
+        alt="sierra"
+      />
 
-        <div
-          className="flex justify-center mt-52 text-center"
-          style={{ textShadow: '5px 5px black' }}
-        >
-          <h1 className="text-6xl font-bold" suppressHydrationWarning>
-            {time?.clock}
-            <br />
-            {time?.date}
-          </h1>
-        </div>
+      <div
+        className="flex justify-center mt-52 text-center"
+        style={{ textShadow: '5px 5px black' }}
+      >
+        <h1 className="text-6xl font-bold" suppressHydrationWarning>
+          {time?.clock}
+          <br />
+          {time?.date}
+        </h1>
       </div>
     </>
   )
