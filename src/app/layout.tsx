@@ -8,10 +8,12 @@ export const metadata: Metadata = {
   title: 'Hello There!'
 }
 
-export default function RootLayout ({ children }: { children: React.ReactNode }): JSX.Element {
+export default function RootLayout (
+  { children }: { children: React.ReactNode }
+): JSX.Element {
   return (
-        <html lang="en">
-        <body className={inter.className}>{children}</body>
-        </html>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   )
 }
