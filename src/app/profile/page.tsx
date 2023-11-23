@@ -1,25 +1,25 @@
-"use client"
+'use client'
 
-import Image from "next/image"
+import Image from 'next/image'
 
-function Item({text, icon, link, id}: {text: string, icon: string, link: string, id: string}) {
-    return (
+function Item ({ text, icon, link, id }: { text: string, icon: string, link: string, id: string }): JSX.Element {
+  return (
         <a href={link} target="_blank" key={id}>
             <div className="h-24 md:h-28 border-0 hover:border-0 rounded-3xl p-4 flex items-center justify-center cursor-pointer hover:bg-white/50 bg-white/20 transition-colors">
                 <Image src={icon} width={32} height={32} alt={`${text} logo`} className="w-10 md:w-14"/>
                 <h1 className="text-2xl md:text-4xl pl-2 md:pl-4 font-medium text-white">{text}</h1>
             </div>
         </a>
-    )
+  )
 }
 
 const socials = [
-    {id: "0", text: "GitHub", icon: "/github.svg", link: "https://github.com/itswilliboy"},
-    {id: "1", text: "Steam", icon: "/steam.svg", link: "https://steamcommunity.com/id/itswilliboy"}
+  { id: '0', text: 'GitHub', icon: '/github.svg', link: 'https://github.com/itswilliboy' },
+  { id: '1', text: 'Steam', icon: '/steam.svg', link: 'https://steamcommunity.com/id/itswilliboy' }
 ]
 
-export default function Profile() {
-    return (
+export default function Profile (): JSX.Element {
+  return (
         <>
             <div>
                 <Image
@@ -44,12 +44,12 @@ export default function Profile() {
 
                         </a>
                             {
-                                socials.map((i) => { return Item(i)})
+                                socials.map((i) => { return Item(i) })
                             }
                         </div>
                     </div>
                 </div>
             </div>
         </>
-    )
+  )
 }
