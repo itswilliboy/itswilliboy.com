@@ -17,7 +17,6 @@ export default function TikTokForm ({
     e.preventDefault()
     const data = new FormData(e.currentTarget)
     const url = data.get('url')?.toString()
-    console.log(url)
     if (url == null || url === '') {
       errorSetter('You need to enter a URL.')
       return
