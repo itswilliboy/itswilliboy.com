@@ -17,7 +17,8 @@ export default function TikTokForm ({
     e.preventDefault()
     const data = new FormData(e.currentTarget)
     const url = data.get('url')?.toString()
-    if (url == null) {
+    console.log(url)
+    if (url == null || url === '') {
       errorSetter('You need to enter a URL.')
       return
     }
@@ -31,7 +32,7 @@ export default function TikTokForm ({
         }
 
         loadingSetter(false)
-        router.push(`/tiktok/result?url=${video[0]}`)
+        router.push(`/tiktok/result?url=${video.video[0]}`)
       })
       .catch((err) => {
         loadingSetter(false)
