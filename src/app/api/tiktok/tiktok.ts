@@ -1,6 +1,16 @@
+interface VideoMetadata {
+  description: string
+  creator: {
+    nickname: string
+    unique_id: string
+  }
+  downloadUrl: string
+}
+
 interface TikTokResponse {
   video: ArrayBuffer
   content_type: string
+  metadata: VideoMetadata
 }
 
 // slightly modified version of: https://stackoverflow.com/a/77178079
@@ -8,16 +18,12 @@ const TIKTOK_RE = /^.*https:\/\/(?:m|www|vm)?\.?tiktok\.com\/((?:.*\b(?:(?:usr|v
 const BASE_URL = 'https://api16-normal-c-useast1a.tiktokv.com'
 
 const headers = new Headers({
-  'User-Agent': 'TikTok 26.2.0 rv:262018 (iPhone; iOS 14.4.2; en_US) Cronet',
-  Referer: 'https://www.tiktok.com/'
+  'User-Agent': 'TikTok 26.2.0 rv:262018 (iPhone; iOS 14.4.2; en_US) Cronet'
 })
 
 export const revalidate = 3600
 
-const queryVideo = async (awemeId: string): Promise<{
-  downloadUrl: string
-  description: string
-}> => {
+const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
   const req = await fetch(`${BASE_URL}/aweme/v1/feed/?aweme_id=${awemeId}&lr=unwatermarked`, {
     headers
   })
@@ -38,11 +44,18 @@ const queryVideo = async (awemeId: string): Promise<{
 
   return {
     description: video.desc,
+    creator: {
+      nickname: video.author.nickname,
+      unique_id: video.author.unique_id
+    },
     downloadUrl: video.video.download_addr.url_list[0]
   }
 }
 
-const fetchVideo = async (url: string): Promise<TikTokResponse> => {
+const fetchVideo = async (url: string): Promise<{
+  video: ArrayBuffer
+  content_type: string
+}> => {
   const req = await fetch(url, {
     headers
   })
@@ -94,7 +107,10 @@ const downloadVideo = async (url: string): Promise<TikTokResponse> => {
   const video = await queryVideo(awemeId)
   const resp = await fetchVideo(video.downloadUrl)
 
-  return resp
+  return {
+    ...resp,
+    metadata: video
+  }
 }
 
 export {
