@@ -8,12 +8,13 @@ interface VideoMetadata {
 }
 
 interface TikTokResponse {
-  video: ArrayBuffer
+  video: ArrayBuffer | Blob
   content_type: string
   metadata: VideoMetadata
 }
 
 // slightly modified version of: https://stackoverflow.com/a/77178079
+// https://regex101.com/r/9eCwKg/1
 const TIKTOK_RE = /^.*https:\/\/(?:m|www|vm)?\.?tiktok\.com\/((?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|&item_id=)(?<aweme_id>\d+))|\w+)/
 const BASE_URL = 'https://api16-normal-c-useast1a.tiktokv.com'
 
@@ -25,7 +26,10 @@ export const revalidate = 3600
 
 const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
   const req = await fetch(`${BASE_URL}/aweme/v1/feed/?aweme_id=${awemeId}&lr=unwatermarked`, {
-    headers
+    headers,
+    next: {
+      revalidate: 3600
+    }
   })
 
   if (!req.ok) {
@@ -57,7 +61,10 @@ const fetchVideo = async (url: string): Promise<{
   content_type: string
 }> => {
   const req = await fetch(url, {
-    headers
+    headers,
+    next: {
+      revalidate: 3600
+    }
   })
 
   if (!req.ok) {
@@ -74,7 +81,10 @@ const fetchVideo = async (url: string): Promise<{
 const getAweme = async (url: string): Promise<string> => {
   const req = await fetch(url, {
     headers,
-    redirect: 'follow'
+    redirect: 'follow',
+    next: {
+      revalidate: 3600
+    }
   })
 
   if (!req.ok) {
@@ -115,4 +125,8 @@ const downloadVideo = async (url: string): Promise<TikTokResponse> => {
 
 export {
   downloadVideo
+}
+
+export type {
+  TikTokResponse
 }

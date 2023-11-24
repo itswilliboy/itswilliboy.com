@@ -1,52 +1,65 @@
 'use client'
 
 import { type FormEvent } from 'react'
-import getVideo from '../utils/getVideo'
-import { useRouter } from 'next/navigation'
+import { type TikTokResponse } from '../api/tiktok/tiktok'
+
+interface FormParam {
+  pageStateSetter: (value: {
+    isLoading: boolean
+    errorMessage: string | null
+  }) => void
+  videoSetter: (value: TikTokResponse | null) => void
+}
 
 export default function TikTokForm ({
-  loadingSetter,
-  errorSetter
-}: {
-  loadingSetter: (value: boolean) => void
-  errorSetter: (value: string | null) => void
-}): JSX.Element {
-  const router = useRouter()
+  pageStateSetter,
+  videoSetter
+}: FormParam): JSX.Element {
+  //
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
     const url = data.get('url')?.toString()
+
     if (url == null || url === '') {
-      errorSetter('You need to enter a URL.')
-      return
+      pageStateSetter({
+        isLoading: false,
+        errorMessage: 'You need to enter a URL.'
+      }); return
     }
-    loadingSetter(true)
 
-    getVideo(url)
-      .then((video) => {
-        if (video == null) {
-          errorSetter('Something went wrong.')
-          return
-        }
+    pageStateSetter({
+      isLoading: true,
+      errorMessage: null
+    })
 
-        loadingSetter(false)
-        router.push(`/tiktok/result?url=${video.video[0]}`)
+    const req = await fetch(`/api/tiktok?q=${encodeURIComponent(url)}`)
+    if (!req.ok) {
+      const resp = await req.json()
+
+      pageStateSetter({
+        isLoading: false,
+        errorMessage: resp.message
       })
-      .catch((err) => {
-        loadingSetter(false)
-        errorSetter(err.message)
-      })
+    }
+
+    const resp = await req.arrayBuffer()
+    const metadata = JSON.parse(req.headers.get('x-video-metadata') ?? '') ?? {}
+
+    videoSetter({
+      video: new Blob([resp]),
+      content_type: req.headers.get('content-type') ?? 'video/mp4',
+      metadata
+    })
   }
 
   return (
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={onSubmit} className="flex flex-col gap-4 items-center">
       <input
         onClick={(e) => {
           e.currentTarget.select()
-        }}
-        onChange={() => {
-          errorSetter(null)
         }}
         type="text"
         name="url"
