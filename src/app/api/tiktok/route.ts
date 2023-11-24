@@ -2,6 +2,10 @@ import rl from '../ratelimit'
 
 import { downloadVideo } from './tiktok'
 
+const pf = (contentType: string): string => {
+  return contentType.split('/')[1]
+}
+
 export const GET = rl(async (req: Request): Promise<Response> => {
   const url = new URL(req.url)
   const tiktokUrl = url.searchParams.get('q')
@@ -20,6 +24,7 @@ export const GET = rl(async (req: Request): Promise<Response> => {
     return new Response(resp.video, {
       headers: {
         'Content-Type': resp.content_type,
+        'Content-Disposition': `attachment; filename="${resp.metadata.creator.unique_id} - ${resp.metadata.aweme_id}.${pf(resp.content_type)}"`,
         'X-Video-Metadata': encodeURIComponent(JSON.stringify(resp.metadata))
       }
     })

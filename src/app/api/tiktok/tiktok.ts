@@ -5,6 +5,7 @@ interface VideoMetadata {
     unique_id: string
   }
   downloadUrl: string
+  aweme_id: string
 }
 
 interface TikTokResponse {
@@ -52,7 +53,8 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
       nickname: video.author.nickname,
       unique_id: video.author.unique_id
     },
-    downloadUrl: video.video.play_addr.url_list[0] ?? video.video.download_addr.url_list[0]
+    downloadUrl: video.video.play_addr.url_list[0] ?? video.video.download_addr.url_list[0],
+    aweme_id: video.aweme_id
   }
 }
 

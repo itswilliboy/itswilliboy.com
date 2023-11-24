@@ -49,6 +49,8 @@ export default function TikTokForm ({
       }); return
     }
 
+    videoSetter(null)
+
     const resp = await req.arrayBuffer()
     const metadata = JSON.parse(
       decodeURIComponent(req.headers.get('x-video-metadata') ?? '')
