@@ -1,6 +1,8 @@
+import rl from '../ratelimit'
+
 import { downloadVideo } from './tiktok'
 
-export async function GET (req: Request): Promise<Response> {
+export const GET = rl(async (req: Request): Promise<Response> => {
   const url = new URL(req.url)
   const tiktokUrl = url.searchParams.get('q')
 
@@ -26,4 +28,7 @@ export async function GET (req: Request): Promise<Response> {
       status: 400
     })
   }
-}
+}, {
+  limit: 5,
+  per: 60 // seconds
+})
