@@ -18,7 +18,7 @@ export async function GET (req: Request): Promise<Response> {
     return new Response(resp.video, {
       headers: {
         'Content-Type': resp.content_type,
-        'X-Video-Metadata': JSON.stringify(resp.metadata)
+        'X-Video-Metadata': encodeURIComponent(JSON.stringify(resp.metadata))
       }
     })
   } catch (err: any) {
