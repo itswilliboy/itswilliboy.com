@@ -41,7 +41,7 @@ export default function TikTokForm ({
       pageStateSetter({
         isLoading: false,
         errorMessage: resp.message
-      })
+      }); return
     }
 
     const resp = await req.arrayBuffer()
