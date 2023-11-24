@@ -28,7 +28,7 @@ export default function TikTok (): JSX.Element {
         )}
 
         <div className="pt-5">
-          <TikTokForm pageStateSetter={setState} videoSetter={setVideo} />
+          <TikTokForm pageStateSetter={setState} pageState={state} videoSetter={setVideo} />
         </div>
 
         {video !== null && (

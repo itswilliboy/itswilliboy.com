@@ -3,18 +3,23 @@
 import { type FormEvent } from 'react'
 import { type TikTokResponse } from '../api/tiktok/tiktok'
 
-interface FormParam {
+interface TikTokFormParam {
   pageStateSetter: (value: {
     isLoading: boolean
     errorMessage: string | null
   }) => void
+  pageState: {
+    isLoading: boolean
+    errorMessage: string | null
+  }
   videoSetter: (value: TikTokResponse | null) => void
 }
 
 export default function TikTokForm ({
   pageStateSetter,
+  pageState,
   videoSetter
-}: FormParam): JSX.Element {
+}: TikTokFormParam): JSX.Element {
   //
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -52,6 +57,11 @@ export default function TikTokForm ({
       content_type: req.headers.get('content-type') ?? 'video/mp4',
       metadata
     })
+
+    pageStateSetter({
+      isLoading: false,
+      errorMessage: null
+    })
   }
 
   return (
@@ -61,17 +71,19 @@ export default function TikTokForm ({
         onClick={(e) => {
           e.currentTarget.select()
         }}
+        disabled={pageState.isLoading}
         type="text"
         name="url"
         placeholder="Enter a TikTok Video URL"
-        className="p-2 rounded-lg outline-none bg-transparent w-[325px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors"
+        className="p-2 rounded-lg outline-none bg-transparent w-[325px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors disabled:opacity-70 disabled:cursor-wait"
         autoComplete="off"
       />
 
       <input
         type="submit"
+        disabled={pageState.isLoading}
         value="Download"
-        className="text-white p-2 cursor-pointer border-2 w-48 hover:border-y- rounded-lg hover:bg-violet-400/40 transition-colors"
+        className="text-white p-2 cursor-pointer border-2 w-48 hover:border-y- rounded-lg hover:bg-violet-400/40 transition-colors disabled:opacity-70 disabled:cursor-wait"
       />
     </form>
   )
