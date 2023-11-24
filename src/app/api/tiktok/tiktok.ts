@@ -14,8 +14,8 @@ interface TikTokResponse {
 }
 
 // slightly modified version of: https://stackoverflow.com/a/77178079
-// https://regex101.com/r/9eCwKg/1
-const TIKTOK_RE = /^.*https:\/\/(?:m|www|vm)?\.?tiktok\.com\/((?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|&item_id=)(?<aweme_id>\d+))|\w+)/
+// https://regex101.com/r/ldPoYX/1
+const TIKTOK_RE = /^.*https:\/\/(?:m|www|vm|vt)?\.?tiktok\.com\/((?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|&item_id=)(?<aweme_id>\d+))|\w+)/
 const BASE_URL = 'https://api16-normal-c-useast1a.tiktokv.com'
 
 const headers = new Headers({
