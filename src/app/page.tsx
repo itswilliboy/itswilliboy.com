@@ -1,9 +1,11 @@
 'use client'
 
-import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
-const updateTime = (): { clock: string, date: string } => {
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+
+const getTime = (): { clock: string, date: string } => {
   const [clock, date] = new Date()
     .toLocaleString('en-GB', { hour12: false })
     .split(',')
@@ -14,12 +16,12 @@ const updateTime = (): { clock: string, date: string } => {
   }
 }
 
-export default function Home (): JSX.Element {
-  const [time, setTime] = useState(updateTime())
+const Home = (): JSX.Element => {
+  const [time, setTime] = useState(getTime())
 
   useEffect(() => {
     setInterval(() => {
-      setTime(updateTime())
+      setTime(getTime())
     }, 1000)
   }, [])
 
@@ -45,3 +47,7 @@ export default function Home (): JSX.Element {
     </>
   )
 }
+
+export default dynamic(async () => await Promise.resolve(Home), {
+  ssr: false
+})
