@@ -1,26 +1,20 @@
 'use client'
 
-import { type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { type TikTokResponse } from '../api/tiktok/tiktok'
+import Spinner from './Spinner'
 
 interface TikTokFormParam {
-  pageStateSetter: (value: {
-    isLoading: boolean
-    errorMessage: string | null
-  }) => void
-  pageState: {
-    isLoading: boolean
-    errorMessage: string | null
-  }
   videoSetter: (value: TikTokResponse | null) => void
 }
 
 export default function TikTokForm ({
-  pageStateSetter,
-  pageState,
   videoSetter
 }: TikTokFormParam): JSX.Element {
-  //
+  const [pageState, setPageState] = useState<{
+    isLoading: boolean
+    errorMessage: string | null
+  }>({ isLoading: false, errorMessage: null })
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -28,13 +22,13 @@ export default function TikTokForm ({
     const url = data.get('url')?.toString()
 
     if (url == null || url === '') {
-      pageStateSetter({
+      setPageState({
         isLoading: false,
         errorMessage: 'You need to enter a URL.'
       }); return
     }
 
-    pageStateSetter({
+    setPageState({
       isLoading: true,
       errorMessage: null
     })
@@ -43,7 +37,7 @@ export default function TikTokForm ({
     if (!req.ok) {
       const resp = await req.json()
 
-      pageStateSetter({
+      setPageState({
         isLoading: false,
         errorMessage: resp.message
       }); return
@@ -62,7 +56,7 @@ export default function TikTokForm ({
       metadata
     })
 
-    pageStateSetter({
+    setPageState({
       isLoading: false,
       errorMessage: null
     })
@@ -83,12 +77,25 @@ export default function TikTokForm ({
         autoComplete="off"
       />
 
-      <input
+      <button
         type="submit"
         disabled={pageState.isLoading}
-        value="Download"
-        className="text-white p-2 cursor-pointer border-2 w-48 hover:border-y- rounded-lg hover:bg-violet-400/40 transition-colors disabled:opacity-70 disabled:cursor-wait"
-      />
+        className="p-2 w-full md:w-4/12 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors disabled:cursor-wait"
+      >
+        {/* eslint-disable-next-line multiline-ternary */}
+        {!pageState.isLoading ? (
+          <p>Download</p>
+        ) : (
+          <div className="flex justify-center items-center">
+            <Spinner />
+            <p>Downloading...</p>
+          </div>
+        )}
+      </button>
+
+      {pageState.errorMessage !== null && (
+        <p className="text-red-500 text-md">{pageState.errorMessage}</p>
+      )}
     </form>
   )
 }
