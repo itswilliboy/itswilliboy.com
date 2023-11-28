@@ -37,7 +37,7 @@ const HoverButton = ({
         width={32}
         height={32}
         alt={src}
-        className="w-8 hover:w-10 transition-all duration-300"
+        className="w-6 md:w-8 hover:w-8 md:hover:w-10 transition-all duration-300"
       />
     </a>
   )
@@ -74,6 +74,7 @@ const Home = (): JSX.Element => {
     <>
       <Image
         fill
+        objectFit="cover"
         className="object-center object-covert pointer-events-none -z-10"
         src="/sierra.jpg"
         alt="sierra"
@@ -85,10 +86,10 @@ const Home = (): JSX.Element => {
         })}
       </div>
       <div
-        className="flex justify-center mt-52 text-center text-white"
+        className="flex justify-center mt-20 md:mt-48 text-center text-white"
         style={{ textShadow: '5px 5px black' }}
       >
-        <h1 className="text-6xl font-bold" suppressHydrationWarning>
+        <h1 className="text-5xl md:text-6xl font-bold" suppressHydrationWarning>
           {time?.clock}
           <br />
           {time?.date}
