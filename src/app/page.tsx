@@ -16,6 +16,51 @@ const getTime = (): { clock: string, date: string } => {
   }
 }
 
+const HoverButton = ({
+  title,
+  src,
+  href
+}: {
+  title: string
+  src: string
+  href: string
+}): JSX.Element => {
+  return (
+    <a
+      href={href}
+      title={title}
+      className="opacity-50 hover:opacity-100 transition-opacity"
+      target="_blank"
+    >
+      <Image
+        src={src}
+        width={32}
+        height={32}
+        alt={src}
+        className="w-8 hover:w-10 transition-all duration-300"
+      />
+    </a>
+  )
+}
+
+const items = [
+  {
+    title: 'View Source',
+    src: './github.svg',
+    href: 'https://github.com/itswilliboy/itswilliboy.com'
+  },
+  {
+    title: 'TikTok Downloader',
+    src: './tiktok.svg',
+    href: '/tiktok'
+  },
+  {
+    title: 'Profile',
+    src: './user.svg',
+    href: '/profile'
+  }
+]
+
 const Home = (): JSX.Element => {
   const [time, setTime] = useState(getTime())
 
@@ -34,8 +79,13 @@ const Home = (): JSX.Element => {
         alt="sierra"
       />
 
+      <div className="inline-flex w-32 h-16 items-center ml-4 gap-3">
+        {items.map((i) => {
+          return HoverButton(i)
+        })}
+      </div>
       <div
-        className="flex justify-center mt-52 text-center"
+        className="flex justify-center mt-52 text-center text-white"
         style={{ textShadow: '5px 5px black' }}
       >
         <h1 className="text-6xl font-bold" suppressHydrationWarning>
