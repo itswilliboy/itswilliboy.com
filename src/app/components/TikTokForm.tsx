@@ -25,7 +25,8 @@ export default function TikTokForm ({
       setPageState({
         isLoading: false,
         errorMessage: 'You need to enter a URL.'
-      }); return
+      })
+      return
     }
 
     setPageState({
@@ -40,7 +41,8 @@ export default function TikTokForm ({
       setPageState({
         isLoading: false,
         errorMessage: resp.message
-      }); return
+      })
+      return
     }
 
     videoSetter(null)
@@ -68,6 +70,9 @@ export default function TikTokForm ({
       <input
         onClick={(e) => {
           e.currentTarget.select()
+        }}
+        onChange={(e) => {
+          e.currentTarget.value = e.currentTarget.value.split('?')[0]
         }}
         disabled={pageState.isLoading}
         type="text"
