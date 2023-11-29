@@ -24,14 +24,14 @@ export default function TikTok (): JSX.Element {
 
   return (
     <div className="w-screen min-h-screen bg-slate-900">
-      <div className="flex flex-col items-center h-full pt-5">
+      <div className="flex flex-col items-center h-screen pt-5">
         <TikTokForm videoSetter={setVideo} />
 
         {video !== null && (
-          <div className="flex flex-row mt-5 w-screen justify-center pl-[450px]">
+          <div className="flex flex-row mt-5 w-screen justify-center pl-[350px]">
             <div className="flex flex-col">
               <video
-                className="w-[450px] rounded-tl-lg rounded-bl-lg"
+                className="w-[350px] rounded-tl-lg rounded-bl-lg"
                 onLoadStart={(e) => {
                   e.currentTarget.volume = 0.5
                 }}
@@ -45,10 +45,10 @@ export default function TikTok (): JSX.Element {
                 Your browser does not support videos.
               </video>
             </div>
-            <div className="w-[450px] px-4 bg-slate-800 rounded-tr-lg rounded-br-lg pt-2">
+            <div className="w-[350px] px-4 bg-slate-800 rounded-tr-lg rounded-br-lg pt-3">
               <p className="font-semibold text-2xl pl-3">
                 {video.metadata.creator.nickname}
-                &nbsp;
+                <br />
                 <a
                   className="text-base text-gray-400 hover:text-gray-100 transition-colors"
                   href={`https://www.tiktok.com/@${video.metadata.creator.unique_id}`}
@@ -62,31 +62,37 @@ export default function TikTok (): JSX.Element {
 
               <div className="break-words mb-5 pl-3">
                 {getVideoDescription(video.metadata.description) !== null && (
-                  <p>
+                  <p className="pb-1">
                     {getVideoDescription(video.metadata.description).caption}
                   </p>
                 )}
-                {getVideoDescription(video.metadata.description).hashtags.map(
-                  (i) => {
-                    return (
-                      <a
-                        href={`https://www.tiktok.com/tag/${i}`}
-                        key={i}
-                        target="_blank"
-                      >
-                        <span className="text-white/50 hover:text-white/90 font-medium transition-colors duration-300">
-                          #{i}&nbsp;
-                        </span>
-                      </a>
-                    )
-                  }
-                )}
+                <div>
+                  {getVideoDescription(video.metadata.description).hashtags.map(
+                    (i) => {
+                      return (
+                        <a
+                          href={`https://www.tiktok.com/tag/${i}`}
+                          key={i}
+                          target="_blank"
+                        >
+                          <span className="text-white/50 hover:text-white/90 font-medium transition-colors duration-300">
+                            #{i}
+                          </span>
+                        </a>
+                      )
+                    }
+                  )}
+                </div>
               </div>
 
-              <div className="flex w-[418px] items-center justify-center">
+              <div className="flex items-center justify-center">
                 <a
                   href={URL.createObjectURL(video.video as Blob)}
-                  className="bg-gray-700 hover:bg-gray-600 p-3 rounded-lg w-96 text-center transition-colors duration-300"
+                  download={`${video.metadata.aweme_id}.${
+                    video.content_type.split('/')[1]
+                  }`}
+                  type={video.content_type}
+                  className="bg-gray-700 hover:bg-gray-600 p-3 rounded-lg w-72 text-center transition-colors duration-300"
                 >
                   Download Video
                 </a>
