@@ -18,6 +18,7 @@ export default function RootLayout (
 ): JSX.Element {
   return (
     <html lang="en">
+      <meta name='darkreader-lock'/>
       <body className={inter.className}>{children}</body>
     </html>
   )
