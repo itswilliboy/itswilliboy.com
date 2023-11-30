@@ -61,7 +61,6 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
   }
 
   const video = resp.aweme_list[0]
-  console.log(video)
   if (video.aweme_id !== awemeId) {
     throw new Error('Invalid video ID.')
   }
