@@ -32,11 +32,11 @@ const headers = new Headers({
 export const revalidate = 3600
 
 const getVideoDescription = (str: string): VideoDescription => {
-  const split = str.split('#')
-  const caption = split.shift() ?? ''
+  const tags = str.match(/#\w*/g) ?? []
+  const caption = tags.reduce((res, word) => res.replace(word, ''), str).replace(/\s\s+/g, ' ')
   return {
-    caption,
-    tags: split
+    tags,
+    caption
   }
 }
 
@@ -61,6 +61,7 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
   }
 
   const video = resp.aweme_list[0]
+  console.log(video)
   if (video.aweme_id !== awemeId) {
     throw new Error('Invalid video ID.')
   }

@@ -59,7 +59,7 @@ export default function TikTok (): JSX.Element {
                         target="_blank"
                       >
                         <span className="text-white/50 hover:text-white/90 font-medium transition-colors duration-300">
-                          #{i}
+                          {i}&nbsp;
                         </span>
                       </a>
                     )
