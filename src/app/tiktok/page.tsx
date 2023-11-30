@@ -86,7 +86,7 @@ export default function TikTok (): JSX.Element {
               <div className="flex flex-row flex-1 justify-center gap-6">
                 <Stat src="/eye.svg" value={video.metadata.statistics.views} />
                 <Stat
-                  src="/thumbs_up.svg"
+                  src="/heart.svg"
                   value={video.metadata.statistics.likes}
                 />
                 <Stat
