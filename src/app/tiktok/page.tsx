@@ -5,20 +5,6 @@ import TikTokForm from '../components/TikTokForm'
 
 import type { TikTokResponse } from '../api/tiktok/tiktok'
 
-interface videoDescription {
-  caption: string
-  hashtags: string[]
-}
-
-const getVideoDescription = (str: string): videoDescription => {
-  const split = str.split('#')
-  const caption = split.shift() ?? ''
-  return {
-    caption,
-    hashtags: split
-  }
-}
-
 export default function TikTok (): JSX.Element {
   const [video, setVideo] = useState<TikTokResponse | null>(null)
 
@@ -61,27 +47,23 @@ export default function TikTok (): JSX.Element {
               <div className="h-1 bg-gray-700 m-2" />
 
               <div className="break-words mb-5 pl-3">
-                {getVideoDescription(video.metadata.description) !== null && (
-                  <p className="pb-1">
-                    {getVideoDescription(video.metadata.description).caption}
-                  </p>
+                {video.metadata.description !== null && (
+                  <p className="pb-1 font-medium">{video.metadata.description.caption}</p>
                 )}
                 <div>
-                  {getVideoDescription(video.metadata.description).hashtags.map(
-                    (i) => {
-                      return (
-                        <a
-                          href={`https://www.tiktok.com/tag/${i}`}
-                          key={i}
-                          target="_blank"
-                        >
-                          <span className="text-white/50 hover:text-white/90 font-medium transition-colors duration-300">
-                            #{i}
-                          </span>
-                        </a>
-                      )
-                    }
-                  )}
+                  {video.metadata.description.tags.map((i) => {
+                    return (
+                      <a
+                        href={`https://www.tiktok.com/tag/${i}`}
+                        key={i}
+                        target="_blank"
+                      >
+                        <span className="text-white/50 hover:text-white/90 font-medium transition-colors duration-300">
+                          #{i}
+                        </span>
+                      </a>
+                    )
+                  })}
                 </div>
               </div>
 

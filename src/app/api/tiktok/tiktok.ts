@@ -1,5 +1,10 @@
+interface VideoDescription {
+  caption: string
+  tags: string[]
+}
+
 interface VideoMetadata {
-  description: string
+  description: VideoDescription
   creator: {
     nickname: string
     unique_id: string
@@ -16,7 +21,8 @@ interface TikTokResponse {
 
 // slightly modified version of: https://stackoverflow.com/a/77178079
 // https://regex101.com/r/ldPoYX/1
-const TIKTOK_RE = /^.*https:\/\/(?:m|www|vm|vt)?\.?tiktok\.com\/((?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|&item_id=)(?<aweme_id>\d+))|\w+)/
+const TIKTOK_RE =
+  /^.*https:\/\/(?:m|www|vm|vt)?\.?tiktok\.com\/((?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|&item_id=)(?<aweme_id>\d+))|\w+)/
 const BASE_URL = 'https://api16-normal-c-useast1a.tiktokv.com'
 
 const headers = new Headers({
@@ -25,13 +31,25 @@ const headers = new Headers({
 
 export const revalidate = 3600
 
+const getVideoDescription = (str: string): VideoDescription => {
+  const split = str.split('#')
+  const caption = split.shift() ?? ''
+  return {
+    caption,
+    tags: split
+  }
+}
+
 const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
-  const req = await fetch(`${BASE_URL}/aweme/v1/feed/?aweme_id=${awemeId}&lr=unwatermarked`, {
-    headers,
-    next: {
-      revalidate: 3600
+  const req = await fetch(
+    `${BASE_URL}/aweme/v1/feed/?aweme_id=${awemeId}&lr=unwatermarked`,
+    {
+      headers,
+      next: {
+        revalidate: 3600
+      }
     }
-  })
+  )
 
   if (!req.ok) {
     throw new Error('Could not query video')
@@ -48,17 +66,21 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
   }
 
   return {
-    description: video.desc,
+    description: getVideoDescription(video.desc),
     creator: {
       nickname: video.author.nickname,
       unique_id: video.author.unique_id
     },
-    downloadUrl: video.video.play_addr.url_list[0] ?? video.video.download_addr.url_list[0],
+    downloadUrl:
+      video.video.play_addr.url_list[0] ??
+      video.video.download_addr.url_list[0],
     aweme_id: video.aweme_id
   }
 }
 
-const fetchVideo = async (url: string): Promise<{
+const fetchVideo = async (
+  url: string
+): Promise<{
   video: ArrayBuffer
   content_type: string
 }> => {
@@ -125,10 +147,6 @@ const downloadVideo = async (url: string): Promise<TikTokResponse> => {
   }
 }
 
-export {
-  downloadVideo
-}
+export { downloadVideo }
 
-export type {
-  TikTokResponse
-}
+export type { TikTokResponse }
