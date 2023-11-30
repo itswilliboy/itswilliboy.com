@@ -9,6 +9,12 @@ interface VideoMetadata {
     nickname: string
     unique_id: string
   }
+  statistics: {
+    views: number
+    likes: number
+    comments: number
+    shares: number
+  }
   downloadUrl: string
   aweme_id: string
 }
@@ -33,7 +39,9 @@ export const revalidate = 3600
 
 const getVideoDescription = (str: string): VideoDescription => {
   const tags = str.match(/#\w*/g) ?? []
-  const caption = tags.reduce((res, word) => res.replace(word, ''), str).replace(/\s\s+/g, ' ')
+  const caption = tags
+    .reduce((res, word) => res.replace(word, ''), str)
+    .replace(/\s\s+/g, ' ')
   return {
     tags,
     caption
@@ -70,6 +78,12 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
     creator: {
       nickname: video.author.nickname,
       unique_id: video.author.unique_id
+    },
+    statistics: {
+      views: video.statistics.play_count,
+      likes: video.statistics.digg_count,
+      comments: video.statistics.comment_count,
+      shares: video.statistics.share_count
     },
     downloadUrl:
       video.video.play_addr.url_list[0] ??

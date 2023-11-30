@@ -4,6 +4,19 @@ import { useState } from 'react'
 import TikTokForm from '../components/TikTokForm'
 
 import type { TikTokResponse } from '../api/tiktok/tiktok'
+import Image from 'next/image'
+
+const Stat = ({ src, value }: { src: string, value: number }): JSX.Element => {
+  const formatted = Intl.NumberFormat('en', { notation: 'compact' }).format(
+    value
+  )
+  return (
+    <div className="inline-flex items-center opacity-50">
+      <Image src={src} alt={value.toString()} width={24} height={24} />
+      <span className="text-lg pl-1">{formatted}</span>
+    </div>
+  )
+}
 
 export default function TikTok (): JSX.Element {
   const [video, setVideo] = useState<TikTokResponse | null>(null)
@@ -31,8 +44,8 @@ export default function TikTok (): JSX.Element {
                 Your browser does not support videos.
               </video>
             </div>
-            <div className="w-[350px] px-4 bg-slate-800 rounded-tr-lg rounded-br-lg pt-3">
-              <p className="font-semibold text-2xl pl-3">
+            <div className="w-[350px] px-6 bg-slate-800 rounded-tr-lg rounded-br-lg pt-3">
+              <p className="font-semibold text-2xl">
                 {video.metadata.creator.nickname}
                 <br />
                 <a
@@ -44,17 +57,22 @@ export default function TikTok (): JSX.Element {
                 </a>
               </p>
 
-              <div className="h-1 bg-gray-700 m-2" />
+              <div className="h-1 bg-gray-700 my-2" />
 
-              <div className="break-words mb-5 pl-3">
+              <div className="break-words mb-4">
                 {video.metadata.description !== null && (
-                  <p className="pb-1 font-medium">{video.metadata.description.caption}</p>
+                  <p className="pb-1 font-medium">
+                    {video.metadata.description.caption}
+                  </p>
                 )}
                 <div>
                   {video.metadata.description.tags.map((i) => {
                     return (
                       <a
-                        href={`https://www.tiktok.com/tag/${i}`}
+                        href={`https://www.tiktok.com/tag/${i.replace(
+                          '#',
+                          ''
+                        )}`}
                         key={i}
                         target="_blank"
                       >
@@ -66,8 +84,22 @@ export default function TikTok (): JSX.Element {
                   })}
                 </div>
               </div>
-
-              <div className="flex items-center justify-center">
+              <div className="flex flex-row flex-1 justify-center gap-6">
+                <Stat src="/eye.svg" value={video.metadata.statistics.views} />
+                <Stat
+                  src="/thumbs_up.svg"
+                  value={video.metadata.statistics.likes}
+                />
+                <Stat
+                  src="/comment.svg"
+                  value={video.metadata.statistics.comments}
+                />
+                <Stat
+                  src="/share.svg"
+                  value={video.metadata.statistics.shares}
+                />
+              </div>
+              <div className="flex items-center justify-center mt-4">
                 <a
                   href={URL.createObjectURL(video.video as Blob)}
                   download={`${video.metadata.aweme_id}.${
