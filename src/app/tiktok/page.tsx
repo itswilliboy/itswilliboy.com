@@ -45,9 +45,8 @@ export default function TikTok (): JSX.Element {
               </video>
             </div>
             <div className="w-[350px] px-6 bg-slate-800 rounded-tr-lg rounded-br-lg pt-3">
-              <p className="font-semibold text-2xl">
+              <p className="flex flex-col text-2xl font-semibold">
                 {video.metadata.creator.nickname}
-                <br />
                 <a
                   className="text-base text-gray-400 hover:text-gray-100 transition-colors"
                   href={`https://www.tiktok.com/@${video.metadata.creator.unique_id}`}
