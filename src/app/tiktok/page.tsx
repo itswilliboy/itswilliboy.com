@@ -22,13 +22,13 @@ export default function TikTok (): JSX.Element {
   const [video, setVideo] = useState<TikTokResponse | null>(null)
 
   return (
-    <div className="w-screen min-h-screen bg-slate-900 overflow-y-auto overflow-x-hidden">
+    <div className="w-screen min-h-screen bg-slate-900 overflow-y-auto overflow-x-hidden ">
       <div className="flex flex-col items-center h-screen pt-5">
         <TikTokForm videoSetter={setVideo} />
 
         {video !== null && (
           <div className="flex flex-col md:flex-row mt-5 w-screen justify-center items-center md:pl-[350px]">
-            <div className="flex flex-col">
+            <div>
               <video
                 className="w-[300px] md:w-[350px] rounded-lg md:rounded-tr-none md:rounded-br-none"
                 onLoadStart={(e) => {
