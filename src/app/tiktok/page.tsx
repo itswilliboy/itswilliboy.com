@@ -11,9 +11,9 @@ const Stat = ({ src, value }: { src: string, value: number }): JSX.Element => {
     value
   )
   return (
-    <div className="inline-flex items-center opacity-50">
+    <div className="flex flex-col items-center justify-center opacity-50">
       <Image src={src} alt={value.toString()} width={24} height={24} />
-      <span className="text-lg pl-1">{formatted}</span>
+      <span className="text-lg">{formatted}</span>
     </div>
   )
 }
@@ -83,7 +83,7 @@ export default function TikTok (): JSX.Element {
                   })}
                 </div>
               </div>
-              <div className="flex flex-row flex-1 justify-center gap-6">
+              <div className="flex flex-row justify-evenly gap-6">
                 <Stat src="/eye.svg" value={video.metadata.statistics.views} />
                 <Stat
                   src="/heart.svg"
