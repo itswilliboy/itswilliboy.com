@@ -78,7 +78,7 @@ export default function TikTokForm ({
         type="text"
         name="url"
         placeholder="Enter a TikTok Video URL"
-        className="p-2 rounded-lg outline-none bg-transparent w-[325px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors disabled:opacity-70 disabled:cursor-wait"
+        className="p-2 rounded-lg outline-none bg-transparent w-[300px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors disabled:opacity-70 disabled:cursor-wait"
         autoComplete="off"
       />
 
