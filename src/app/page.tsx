@@ -5,21 +5,21 @@ import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
-const getTime = (): { clock: string, date: string } => {
+const getTime = (): { clock: string; date: string } => {
   const [clock, date] = new Date()
     .toLocaleString('en-GB', { hour12: false })
     .split(',')
 
   return {
     clock: clock.trim(),
-    date: date.trim()
+    date: date.trim(),
   }
 }
 
 const HoverButton = ({
   title,
   src,
-  href
+  href,
 }: {
   title: string
   src: string
@@ -29,7 +29,7 @@ const HoverButton = ({
     <a
       href={href}
       title={title}
-      className="opacity-50 hover:opacity-100 transition-opacity"
+      className="opacity-50 transition-opacity hover:opacity-100"
       target="_blank"
     >
       <Image
@@ -37,7 +37,7 @@ const HoverButton = ({
         width={32}
         height={32}
         alt={src}
-        className="w-6 md:w-8 hover:w-8 md:hover:w-10 transition-all duration-300"
+        className="w-6 transition-all duration-300 hover:w-8 md:w-8 md:hover:w-10"
       />
     </a>
   )
@@ -47,18 +47,18 @@ const items = [
   {
     title: 'View Source',
     src: './github.svg',
-    href: 'https://github.com/itswilliboy/itswilliboy.com'
+    href: 'https://github.com/itswilliboy/itswilliboy.com',
   },
   {
     title: 'TikTok Downloader',
     src: './tiktok.svg',
-    href: '/tiktok'
+    href: '/tiktok',
   },
   {
     title: 'Profile',
     src: './user.svg',
-    href: '/profile'
-  }
+    href: '/profile',
+  },
 ]
 
 const Home = (): JSX.Element => {
@@ -75,21 +75,21 @@ const Home = (): JSX.Element => {
       <Image
         fill
         objectFit="cover"
-        className="object-center object-covert pointer-events-none -z-10"
+        className="object-covert pointer-events-none -z-10 object-center"
         src="/sierra.jpg"
         alt="sierra"
       />
 
-      <div className="inline-flex w-32 h-16 items-center ml-4 gap-3">
+      <div className="ml-4 inline-flex h-16 w-32 items-center gap-3">
         {items.map((i) => {
           return HoverButton(i)
         })}
       </div>
       <div
-        className="flex justify-center mt-20 md:mt-48 text-center text-white"
+        className="mt-20 flex justify-center text-center text-white md:mt-48"
         style={{ textShadow: '5px 5px black' }}
       >
-        <h1 className="text-5xl md:text-6xl font-bold" suppressHydrationWarning>
+        <h1 className="text-5xl font-bold md:text-6xl" suppressHydrationWarning>
           {time?.clock}
           <br />
           {time?.date}
@@ -100,5 +100,5 @@ const Home = (): JSX.Element => {
 }
 
 export default dynamic(async () => await Promise.resolve(Home), {
-  ssr: false
+  ssr: false,
 })

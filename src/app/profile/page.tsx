@@ -7,21 +7,21 @@ const socials = [
     id: '0',
     text: 'GitHub',
     icon: '/github.svg',
-    link: 'https://github.com/itswilliboy'
+    link: 'https://github.com/itswilliboy',
   },
   {
     id: '1',
     text: 'Steam',
     icon: '/steam.svg',
-    link: 'https://steamcommunity.com/id/itswilliboy'
-  }
+    link: 'https://steamcommunity.com/id/itswilliboy',
+  },
 ]
 
-function Item ({
+function Item({
   text,
   icon,
   link,
-  id
+  id,
 }: {
   text: string
   icon: string
@@ -30,7 +30,7 @@ function Item ({
 }): JSX.Element {
   return (
     <a href={link} target="_blank" key={id}>
-      <div className="h-24 md:h-28 border-0 hover:border-0 rounded-3xl p-4 flex items-center justify-center cursor-pointer hover:bg-white/50 bg-white/20 transition-colors">
+      <div className="flex h-24 cursor-pointer items-center justify-center rounded-3xl border-0 bg-white/20 p-4 transition-colors hover:border-0 hover:bg-white/50 md:h-28">
         <Image
           src={icon}
           width={32}
@@ -38,7 +38,7 @@ function Item ({
           alt={`${text} logo`}
           className="w-10 md:w-14"
         />
-        <h1 className="text-2xl md:text-4xl pl-2 md:pl-4 font-medium text-white">
+        <h1 className="pl-2 text-2xl font-medium text-white md:pl-4 md:text-4xl">
           {text}
         </h1>
       </div>
@@ -46,38 +46,38 @@ function Item ({
   )
 }
 
-export default function Profile (): JSX.Element {
+export default function Profile(): JSX.Element {
   return (
     <div>
       <Image
         fill
-        className="object-center object-cover pointer-events-none -z-10"
+        className="pointer-events-none -z-10 object-cover object-center"
         src="/sakura.jpg"
         alt=""
       />
-      <div className="flex w-screen h-screen items-center justify-center">
-        <div className="w-[350px] md:w-[500px] h-[550px] md:h-[650px] bg-white/20 rounded-2xl justify-center p-3 md:p-6 backdrop-blur">
-          <div className="flex flex-row h-32 items-center">
+      <div className="flex h-screen w-screen items-center justify-center">
+        <div className="h-[550px] w-[350px] justify-center rounded-2xl bg-white/20 p-3 backdrop-blur md:h-[650px] md:w-[500px] md:p-6">
+          <div className="flex h-32 flex-row items-center">
             <Image
               src="/milo.jpg"
               width={128}
               height={128}
               alt="pfp"
-              className="rounded-full border-4 pointer-events-none w-24 md:w-32"
+              className="pointer-events-none w-24 rounded-full border-4 md:w-32"
             />
-            <h1 className="text-3xl md:text-6xl ml-5 font-medium">
+            <h1 className="ml-5 text-3xl font-medium md:text-6xl">
               ItsWilliboy
             </h1>
           </div>
-          <div className="flex justify-center mt-2 mb-6 md:my-8">
-            <hr className="w-4/5 border-2 rounded-lg" />
+          <div className="mb-6 mt-2 flex justify-center md:my-8">
+            <hr className="w-4/5 rounded-lg border-2" />
           </div>
           <div className="flex flex-col gap-4">
             <a
               href="https://discord.com/users/263602820496883712"
               target="_blank"
             >
-              <div className="h-24 md:h-28 rounded-3xl flex items-center justify-center cursor-pointer bg-white/20 hover:bg-white/50 transition-colors">
+              <div className="flex h-24 cursor-pointer items-center justify-center rounded-3xl bg-white/20 transition-colors hover:bg-white/50 md:h-28">
                 <Image
                   src="https://discord.c99.nl/widget/theme-4/263602820496883712.png"
                   width={1000}

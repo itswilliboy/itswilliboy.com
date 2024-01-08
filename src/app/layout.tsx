@@ -9,16 +9,18 @@ export const metadata: Metadata = {
   viewport: {
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1
-  }
+    maximumScale: 1,
+  },
 }
 
-export default function RootLayout (
-  { children }: { children: React.ReactNode }
-): JSX.Element {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}): JSX.Element {
   return (
     <html lang="en">
-      <meta name='darkreader-lock'/>
+      <meta name="darkreader-lock" />
       <body className={inter.className}>{children}</body>
     </html>
   )

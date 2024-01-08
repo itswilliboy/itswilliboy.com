@@ -8,13 +8,10 @@ interface RateLimitOptions {
   per: number
 }
 
-const rl = (
-  callback: RouteFn,
-  options?: RateLimitOptions
-): RouteFn => {
+const rl = (callback: RouteFn, options?: RateLimitOptions): RouteFn => {
   const cache = new LRUCache<string, number[]>({
     max: 500,
-    ttl: (options?.per ?? 60) * 1000
+    ttl: (options?.per ?? 60) * 1000,
   })
   const limit = options?.limit ?? 10
 
@@ -35,15 +32,18 @@ const rl = (
     const isRateLimited = currentUsage >= limit
 
     const resp = isRateLimited
-      ? Response.json({
-        message: "You're being rate limited, try again later."
-      }, { status: 429 })
+      ? Response.json(
+          {
+            message: "You're being rate limited, try again later.",
+          },
+          { status: 429 },
+        )
       : await callback(req)
 
     resp.headers.set('X-RateLimit-Limit', limit.toString())
     resp.headers.set(
       'X-RateLimit-Remaining',
-      (isRateLimited ? 0 : limit - currentUsage).toString()
+      (isRateLimited ? 0 : limit - currentUsage).toString(),
     )
 
     return resp

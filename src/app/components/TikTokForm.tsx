@@ -8,8 +8,8 @@ interface TikTokFormParam {
   videoSetter: (value: TikTokResponse | null) => void
 }
 
-export default function TikTokForm ({
-  videoSetter
+export default function TikTokForm({
+  videoSetter,
 }: TikTokFormParam): JSX.Element {
   const [pageState, setPageState] = useState<{
     isLoading: boolean
@@ -24,14 +24,14 @@ export default function TikTokForm ({
     if (url == null || url === '') {
       setPageState({
         isLoading: false,
-        errorMessage: 'You need to enter a URL.'
+        errorMessage: 'You need to enter a URL.',
       })
       return
     }
 
     setPageState({
       isLoading: true,
-      errorMessage: null
+      errorMessage: null,
     })
 
     const req = await fetch(`/api/tiktok?q=${encodeURIComponent(url)}`)
@@ -40,7 +40,7 @@ export default function TikTokForm ({
 
       setPageState({
         isLoading: false,
-        errorMessage: resp.message
+        errorMessage: resp.message,
       })
       return
     }
@@ -49,24 +49,24 @@ export default function TikTokForm ({
 
     const resp = await req.arrayBuffer()
     const metadata = JSON.parse(
-      decodeURIComponent(req.headers.get('x-video-metadata') ?? '')
+      decodeURIComponent(req.headers.get('x-video-metadata') ?? ''),
     )
 
     videoSetter({
       video: new Blob([resp]),
       content_type: req.headers.get('content-type') ?? 'video/mp4',
-      metadata
+      metadata,
     })
 
     setPageState({
       isLoading: false,
-      errorMessage: null
+      errorMessage: null,
     })
   }
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form onSubmit={onSubmit} className="flex flex-col gap-4 items-center">
+    <form onSubmit={onSubmit} className="flex flex-col items-center gap-4">
       <input
         onClick={(e) => {
           e.currentTarget.select()
@@ -78,20 +78,20 @@ export default function TikTokForm ({
         type="text"
         name="url"
         placeholder="Enter a TikTok Video URL"
-        className="p-2 rounded-lg outline-none bg-transparent w-[325px] md:w-[600px] text-center border-2 focus:border-violet-400 hover:border-violet-400 transition-colors disabled:opacity-70 disabled:cursor-wait"
+        className="w-[325px] rounded-lg border-2 bg-transparent p-2 text-center outline-none transition-colors hover:border-violet-400 focus:border-violet-400 disabled:cursor-wait disabled:opacity-70 md:w-[600px]"
         autoComplete="off"
       />
 
       <button
         type="submit"
         disabled={pageState.isLoading}
-        className="p-2 w-full md:w-4/12 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors disabled:cursor-wait"
+        className="w-full rounded-lg bg-slate-700 p-2 transition-colors hover:bg-slate-600 disabled:cursor-wait md:w-4/12"
       >
         {/* eslint-disable-next-line multiline-ternary */}
         {!pageState.isLoading ? (
           <p>Download</p>
         ) : (
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <Spinner />
             <p>Downloading...</p>
           </div>
@@ -99,7 +99,7 @@ export default function TikTokForm ({
       </button>
 
       {pageState.errorMessage !== null && (
-        <p className="text-red-500 text-md">{pageState.errorMessage}</p>
+        <p className="text-md text-red-500">{pageState.errorMessage}</p>
       )}
     </form>
   )

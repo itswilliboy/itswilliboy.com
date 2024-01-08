@@ -32,7 +32,7 @@ const TIKTOK_RE =
 const BASE_URL = 'https://api16-normal-c-useast1a.tiktokv.com'
 
 const headers = new Headers({
-  'User-Agent': 'TikTok 26.2.0 rv:262018 (iPhone; iOS 14.4.2; en_US) Cronet'
+  'User-Agent': 'TikTok 26.2.0 rv:262018 (iPhone; iOS 14.4.2; en_US) Cronet',
 })
 
 export const revalidate = 3600
@@ -44,7 +44,7 @@ const getVideoDescription = (str: string): VideoDescription => {
     .replace(/\s\s+/g, ' ')
   return {
     tags,
-    caption
+    caption,
   }
 }
 
@@ -54,9 +54,9 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
     {
       headers,
       next: {
-        revalidate: 3600
-      }
-    }
+        revalidate: 3600,
+      },
+    },
   )
 
   if (!req.ok) {
@@ -77,23 +77,23 @@ const queryVideo = async (awemeId: string): Promise<VideoMetadata> => {
     description: getVideoDescription(video.desc),
     creator: {
       nickname: video.author.nickname,
-      unique_id: video.author.unique_id
+      unique_id: video.author.unique_id,
     },
     statistics: {
       views: video.statistics.play_count,
       likes: video.statistics.digg_count,
       comments: video.statistics.comment_count,
-      shares: video.statistics.share_count
+      shares: video.statistics.share_count,
     },
     downloadUrl:
       video.video.play_addr.url_list[0] ??
       video.video.download_addr.url_list[0],
-    aweme_id: video.aweme_id
+    aweme_id: video.aweme_id,
   }
 }
 
 const fetchVideo = async (
-  url: string
+  url: string,
 ): Promise<{
   video: ArrayBuffer
   content_type: string
@@ -101,8 +101,8 @@ const fetchVideo = async (
   const req = await fetch(url, {
     headers,
     next: {
-      revalidate: 3600
-    }
+      revalidate: 3600,
+    },
   })
 
   if (!req.ok) {
@@ -112,7 +112,7 @@ const fetchVideo = async (
   const resp = await req.arrayBuffer()
   return {
     video: resp,
-    content_type: req.headers.get('content-type') ?? 'video/mp4'
+    content_type: req.headers.get('content-type') ?? 'video/mp4',
   }
 }
 
@@ -121,8 +121,8 @@ const getAweme = async (url: string): Promise<string> => {
     headers,
     redirect: 'follow',
     next: {
-      revalidate: 3600
-    }
+      revalidate: 3600,
+    },
   })
 
   if (!req.ok) {
@@ -157,7 +157,7 @@ const downloadVideo = async (url: string): Promise<TikTokResponse> => {
 
   return {
     ...resp,
-    metadata: video
+    metadata: video,
   }
 }
 

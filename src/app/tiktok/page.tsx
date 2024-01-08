@@ -6,31 +6,31 @@ import TikTokForm from '../components/TikTokForm'
 import type { TikTokResponse } from '../api/tiktok/tiktok'
 import Image from 'next/image'
 
-const Stat = ({ src, value }: { src: string, value: number }): JSX.Element => {
+const Stat = ({ src, value }: { src: string; value: number }): JSX.Element => {
   const formatted = Intl.NumberFormat('en', { notation: 'compact' }).format(
-    value
+    value,
   )
   return (
     <div className="inline-flex items-center opacity-50">
       <Image src={src} alt={value.toString()} width={24} height={24} />
-      <span className="text-lg pl-1">{formatted}</span>
+      <span className="pl-1 text-lg">{formatted}</span>
     </div>
   )
 }
 
-export default function TikTok (): JSX.Element {
+export default function TikTok(): JSX.Element {
   const [video, setVideo] = useState<TikTokResponse | null>(null)
 
   return (
-    <div className="w-screen min-h-screen bg-slate-900">
-      <div className="flex flex-col items-center h-screen pt-5">
+    <div className="min-h-screen w-screen bg-slate-900">
+      <div className="flex h-screen flex-col items-center pt-5">
         <TikTokForm videoSetter={setVideo} />
 
         {video !== null && (
-          <div className="flex flex-row mt-5 w-screen justify-center pl-[350px]">
+          <div className="mt-5 flex w-screen flex-row justify-center pl-[350px]">
             <div className="flex flex-col">
               <video
-                className="w-[350px] rounded-tl-lg rounded-bl-lg"
+                className="w-[350px] rounded-bl-lg rounded-tl-lg"
                 onLoadStart={(e) => {
                   e.currentTarget.volume = 0.5
                 }}
@@ -44,11 +44,11 @@ export default function TikTok (): JSX.Element {
                 Your browser does not support videos.
               </video>
             </div>
-            <div className="w-[350px] px-6 bg-slate-800 rounded-tr-lg rounded-br-lg pt-3">
+            <div className="w-[350px] rounded-br-lg rounded-tr-lg bg-slate-800 px-6 pt-3">
               <p className="flex flex-col text-2xl font-semibold">
                 {video.metadata.creator.nickname}
                 <a
-                  className="text-base text-gray-400 hover:text-gray-100 transition-colors"
+                  className="text-base text-gray-400 transition-colors hover:text-gray-100"
                   href={`https://www.tiktok.com/@${video.metadata.creator.unique_id}`}
                   target="_blank"
                 >
@@ -56,9 +56,9 @@ export default function TikTok (): JSX.Element {
                 </a>
               </p>
 
-              <div className="h-1 bg-gray-700 my-2" />
+              <div className="my-2 h-1 bg-gray-700" />
 
-              <div className="break-words mb-4">
+              <div className="mb-4 break-words">
                 {video.metadata.description !== null && (
                   <p className="pb-1 font-medium">
                     {video.metadata.description.caption}
@@ -70,12 +70,12 @@ export default function TikTok (): JSX.Element {
                       <a
                         href={`https://www.tiktok.com/tag/${i.replace(
                           '#',
-                          ''
+                          '',
                         )}`}
                         key={i}
                         target="_blank"
                       >
-                        <span className="text-white/50 hover:text-white/90 font-medium transition-colors duration-300">
+                        <span className="font-medium text-white/50 transition-colors duration-300 hover:text-white/90">
                           {i}&nbsp;
                         </span>
                       </a>
@@ -83,7 +83,7 @@ export default function TikTok (): JSX.Element {
                   })}
                 </div>
               </div>
-              <div className="flex flex-row flex-1 justify-center gap-6">
+              <div className="flex flex-1 flex-row justify-center gap-6">
                 <Stat src="/eye.svg" value={video.metadata.statistics.views} />
                 <Stat
                   src="/heart.svg"
@@ -98,14 +98,14 @@ export default function TikTok (): JSX.Element {
                   value={video.metadata.statistics.shares}
                 />
               </div>
-              <div className="flex items-center justify-center mt-4">
+              <div className="mt-4 flex items-center justify-center">
                 <a
                   href={URL.createObjectURL(video.video as Blob)}
                   download={`${video.metadata.aweme_id}.${
                     video.content_type.split('/')[1]
                   }`}
                   type={video.content_type}
-                  className="bg-gray-700 hover:bg-gray-600 p-3 rounded-lg w-72 text-center transition-colors duration-300"
+                  className="w-72 rounded-lg bg-gray-700 p-3 text-center transition-colors duration-300 hover:bg-gray-600"
                 >
                   Download Video
                 </a>
