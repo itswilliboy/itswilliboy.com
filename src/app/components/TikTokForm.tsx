@@ -72,7 +72,7 @@ export default function TikTokForm({
           e.currentTarget.select()
         }}
         onChange={(e) => {
-          e.currentTarget.value = e.currentTarget.value.split('?')[0]
+          e.currentTarget.value = e.currentTarget.value.split('?')[0] ?? ""
         }}
         disabled={pageState.isLoading}
         type="text"

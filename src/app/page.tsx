@@ -11,8 +11,8 @@ const getTime = (): { clock: string; date: string } => {
     .split(',')
 
   return {
-    clock: clock.trim(),
-    date: date.trim(),
+    clock: clock!.trim(),
+    date: date!.trim(),
   }
 }
 

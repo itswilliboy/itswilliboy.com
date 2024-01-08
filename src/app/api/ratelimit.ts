@@ -28,16 +28,16 @@ const rl = (callback: RouteFn, options?: RateLimitOptions): RouteFn => {
     }
     requestCount[0] += 1
 
-    const currentUsage = requestCount[0]
+    const currentUsage = requestCount[0] ?? 0
     const isRateLimited = currentUsage >= limit
 
     const resp = isRateLimited
       ? Response.json(
-          {
-            message: "You're being rate limited, try again later.",
-          },
-          { status: 429 },
-        )
+        {
+          message: "You're being rate limited, try again later.",
+        },
+        { status: 429 },
+      )
       : await callback(req)
 
     resp.headers.set('X-RateLimit-Limit', limit.toString())
