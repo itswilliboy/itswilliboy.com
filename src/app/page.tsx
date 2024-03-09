@@ -20,17 +20,19 @@ const HoverButton = ({
   title,
   src,
   href,
+  target = ""
 }: {
   title: string
   src: string
   href: string
+  target?: string
 }): JSX.Element => {
   return (
     <a
       href={href}
       title={title}
       className="opacity-50 transition-opacity hover:opacity-100"
-      target="_blank"
+      target={target}
     >
       <Image
         src={src}
@@ -48,6 +50,7 @@ const items = [
     title: 'View Source',
     src: './github.svg',
     href: 'https://github.com/itswilliboy/itswilliboy.com',
+    target: "_blank"
   },
   {
     title: 'TikTok Downloader',
